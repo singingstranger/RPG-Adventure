@@ -17,3 +17,11 @@ function TrackFrameUpdateTime(){
 function Restart(){
     location.reload();
 }
+
+function GetRandomInt(min, max){
+    let minCeiling = Math.ceil(min);
+    let maxFloor = Math.floor(max);
+    let rounded = Math.floor(Math.random()*(maxFloor-minCeiling)+minCeiling);
+    console.log(rounded);
+    return rounded;
+}

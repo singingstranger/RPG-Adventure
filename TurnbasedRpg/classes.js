@@ -17,7 +17,7 @@ class Trigger{
         this.height = _tileDimensions
     }
     draw(){
-        _context.fillStyle = "rgba(255,0, 0, 0.2)"
+        _context.fillStyle = "rgba(255,0, 0, 0)"
         _context.fillRect(this.position.x, this.position.y, this.width, this.height)
     }
 }
@@ -52,9 +52,6 @@ class Sprite{
 
     draw(){
         _context.save();
-        /*_context.translate(this.position.x+ this.width/2, this.position.y + this.height/2);
-        _context.rotate(this.rotation);
-        _context.translate(this.position.x- this.width/2, this.position.y - this.height/2);*/
         _context.globalAlpha = this.opacity;
         _context.drawImage(
             this.image, 

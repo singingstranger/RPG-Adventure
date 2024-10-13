@@ -52,13 +52,17 @@ _canvas.height = 576;
 
 
 //Battles
-let _encounterRate = 0.001
+let _encounterRate = 0.1
 const _battle = {
     initiated: false
 }
 let _battleSprites = [];
 let _battleQueue;
-
+let _currentEncounterables =[
+    _monsters.Shadow,
+    _monsters.Slime,
+    _monsters.Snare
+]
 
 
 function SetTileSize(zoom){

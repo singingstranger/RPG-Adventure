@@ -1,23 +1,22 @@
-let _battlePlayer = new Monster(monsters.Player);
-let _enemy = new Monster(monsters.Slime);
+let _battlePlayer = new Monster(_monsters.Player);
+let _enemy;
 
 function InitBattle(){
-    
     _battleSprites = [];
     document.querySelector("#dialogueBox").style.display = "none";
     document.querySelector("#enemyCurrentHealthbar").style.width = "100%";
     document.querySelector("#playerCurrenthealthbar").style.width = "100%";
     document.querySelector("#attacksBox").replaceChildren();
     _battleQueue = [];
-    _battlePlayer = new Monster(monsters.Player);
-    _enemy = new Monster(monsters.Slime);
+    _battlePlayer = new Monster(_monsters.Player);
+
+    _enemy = new Monster(_currentEncounterables[SelectEnemy()]);
 
     _battlePlayer.attacks.forEach(attack=>{
         const attackButton = document.createElement("button");
         attackButton.innerHTML = attack.name;
         document.querySelector("#attacksBox").append(attackButton);
     })
-
 
     document.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", (e) => {
@@ -41,10 +40,12 @@ function InitBattle(){
             attackType.style.color = selectedAttack.color;
         })
     });
-    console.log("finished init");
-
 }
 
+function SelectEnemy(){
+    let randInt= GetRandomInt(0,_currentEncounterables.length);
+    return (randInt);
+}
 
 function QueueActions(selectedAttack){
     if (!_battle.initiated){
