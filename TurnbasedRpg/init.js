@@ -1,14 +1,40 @@
+//Directories
 const _dirOverworld = "./img/Overworld/";
 const _dirBattle = "./img/Battle/";
 
+//Time
+const _frameTime = 10;
+let _timeLastFrame = 0;
+let _timeCurrent = 0;
+
+//Background and sprites
 const _startingMapIndex = 1;
 let _currentMapIndex = _startingMapIndex;
 const _battleScreen = new Image();
 const _startScreen = new Image();
 
+const _boundaries = [];
+const _battleTiles = [];
+const _listOfNPCs = [];
+let _background;
+let _battleBG;
 let _collisionMaps = [];
 let _battleMaps = [];
 
+let _movables = [];
+
+let _currentBackground;
+
+//Player
+let _player;
+const _playerSpriteDimensions = { x: 168, y: 100}
+let _playerAnimationSpeed = 10;
+let _tileDimensions = 32;
+const _spritesheetDimensions = [3, 1]
+const _playerSpriteFrames = _spritesheetDimensions[0];
+let _movementSpeed = 3;
+
+//Init Positions
 const _startingpositionTestScreen = [-600,-200];
 let _offset = {
     x: _startingpositionTestScreen[0],
@@ -17,44 +43,23 @@ let _offset = {
 const _startingPosTileCount = 30;
 const _zoomLevel = 2.5;
 
-let _player;
-const _playerSpriteFrames = 3;
-const _playerSpriteDimensions = { x: 168, y: 100}
-let _playerAnimationSpeed = 10;
-let _tileDimensions = 32;
-
-let _movables = [];
-let _movementSpeed = 3;
-
+//Init Canvas
 const _canvas = document.querySelector("canvas");
 const _context = _canvas.getContext("2d");
-
-const _spritesheetDimensions = [3, 1]
 
 _canvas.width = 1024;
 _canvas.height = 576;
 
 
+//Battles
 let _encounterRate = 0.001
 const _battle = {
     initiated: false
 }
-
-let _currentBackground;
-
-let _renderedSprites = [];
+let _battleSprites = [];
 let _battleQueue;
 
-const _frameTime = 10;
-let _timeLastFrame = 0;
-let _timeCurrent = 0;
 
-
-const _boundaries = [];
-const _battleTiles = [];
-const _listOfNPCs = [];
-let _background;
-let _battleBG;
 
 function SetTileSize(zoom){
     _tileDimensions *= zoom;

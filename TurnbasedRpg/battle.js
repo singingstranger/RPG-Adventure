@@ -3,7 +3,7 @@ let _enemy = new Monster(monsters.Slime);
 
 function InitBattle(){
     
-    _renderedSprites = [];
+    _battleSprites = [];
     document.querySelector("#dialogueBox").style.display = "none";
     document.querySelector("#enemyCurrentHealthbar").style.width = "100%";
     document.querySelector("#playerCurrenthealthbar").style.width = "100%";
@@ -27,7 +27,7 @@ function InitBattle(){
                 attacker: _battlePlayer,
                 recipient: _enemy,
                 remainingHealthPercent: CalculateDamage(selectedAttack.damage, _enemy),
-                renderedSprites: _renderedSprites
+                renderedSprites: _battleSprites
             });
 
     //enemy attacks queued
@@ -72,7 +72,7 @@ function QueueActions(selectedAttack){
                 attacker: _enemy,
                 recipient: _battlePlayer,
                 remainingHealthPercent: CalculateDamage(selectedAttack.damage, _battlePlayer),
-                renderedSprites: _renderedSprites
+                renderedSprites: _battleSprites
             })
         });
 }
@@ -83,8 +83,8 @@ function GetRandomAttack(enemy){
 
 function Activatebattle(animID){
     InitBattle();
-    _renderedSprites.push(_enemy);
-    _renderedSprites.push(_battlePlayer);
+    _battleSprites.push(_enemy);
+    _battleSprites.push(_battlePlayer);
     gsap.to("#overlappingDiv", {
         opacity:1,
         repeat: 3,
@@ -118,7 +118,7 @@ function AnimateBattle(){
         }
     }
     _battleBG.draw();
-    _renderedSprites.forEach((sprite) => {
+    _battleSprites.forEach((sprite) => {
         sprite.draw();
     })
 }
