@@ -1,3 +1,4 @@
+
 //Directories
 const _dirOverworld = "./img/Overworld/";
 const _dirBattle = "./img/Battle/";
@@ -63,6 +64,10 @@ let _currentEncounterables =[
     _monsters.Slime,
     _monsters.Snare
 ]
+
+//UI
+const _thresholdForHealthbarColorChangeMid = 50;
+const _thresholdForHealthbarColorChangeLow = 20;
 
 
 function SetTileSize(zoom){
