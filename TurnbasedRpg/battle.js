@@ -158,9 +158,24 @@ function Attack({attack, attacker, recipient, remainingHealthPercent, renderedSp
 
 function ReduceHealthBar({recipient, remainingHealthPercent}){
     let healthBar = "#playerCurrentHealthbar";
+    
     if (recipient.isEnemy === true){
         healthBar = "#enemyCurrentHealthbar";
     } 
+    if (remainingHealthPercent < _thresholdForHealthbarColorChangeLow){
+        console.log("Health very low");
+        gsap.to(healthBar, {
+            backgroundColor: "#f00",
+            duration: 1
+        });
+    } 
+    else if (remainingHealthPercent < _thresholdForHealthbarColorChangeMid){
+        console.log("Health low ");
+        gsap.to(healthBar, {
+            backgroundColor: "orange",
+            duration: 1
+        });
+    }
     gsap.to(healthBar,{
         width: remainingHealthPercent+"%",
         duration: 1,
