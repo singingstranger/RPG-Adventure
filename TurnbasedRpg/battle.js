@@ -4,13 +4,13 @@ let _enemy;
 function InitBattle(){
     _battleSprites = [];
     document.querySelector("#dialogueBox").style.display = "none";
-    document.querySelector("#enemyCurrentHealthbar").style.width = "100%";
-    document.querySelector("#playerCurrenthealthbar").style.width = "100%";
     document.querySelector("#attacksBox").replaceChildren();
     _battleQueue = [];
     _battlePlayer = new Monster(_monsters.Player);
 
     _enemy = new Monster(_currentEncounterables[SelectEnemy()]);
+    InitEnemyHealth();
+    InitPlayerHealth();
 
     _battlePlayer.attacks.forEach(attack=>{
         const attackButton = document.createElement("button");
@@ -40,6 +40,18 @@ function InitBattle(){
             attackType.style.color = selectedAttack.color;
         })
     });
+}
+function InitEnemyHealth(){
+    const enemyHealthbar = document.querySelector("#enemyCurrentHealthbar");
+    enemyHealthbar.style.width = "100%";
+    enemyHealthbar.style.backgroundColor = "green";
+    document.querySelector("#enemyName").innerHTML = _enemy.name;
+}
+
+function InitPlayerHealth(){
+    const playerHealthbar = document.querySelector("#playerCurrenthealthbar");
+    playerHealthbar.style.width = "100%";
+    playerHealthbar.style.backgroundColor = "green";
 }
 
 function SelectEnemy(){
