@@ -8,20 +8,7 @@ function TrackFrameUpdateTime(){
         _timeLastFrame = _timeCurrent;
     }
     if(deltaTime>_frameTime){
-        console.log("render a frame");
         _timeLastFrame = _timeCurrent;
         return true;
     }
-}
-
-function Restart(){
-    location.reload();
-}
-
-function GetRandomInt(min, max){
-    let minCeiling = Math.ceil(min);
-    let maxFloor = Math.floor(max);
-    let rounded = Math.floor(Math.random()*(maxFloor-minCeiling)+minCeiling);
-    console.log(rounded);
-    return rounded;
 }

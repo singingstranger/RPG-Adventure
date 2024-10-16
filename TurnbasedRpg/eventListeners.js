@@ -1,4 +1,6 @@
 document.querySelector("#dialogueBox").addEventListener("click", (e)=>{
+    if (_isAnimationPlaying)
+        return;
     if (!_battle.initiated){
         ReturnToOverworld();
         return;

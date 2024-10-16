@@ -10,9 +10,9 @@ function InitMaps(index){
         _battleMaps.push(_battleTilesData.tiles.slice(i, i+_startingPosTileCount));
     }
 
-    _startScreen.src = _dirOverworld+index+".png";
-    _currentBackground = _startScreen;
+    _overworldImage.src = _dirOverworld+index+".png";
+    _currentBackground = _overworldImage;
 
-    _battleScreen.src = _dirBattle+index+".png";
+    _battleImage.src = _dirBattle+index+".png";
 }
 

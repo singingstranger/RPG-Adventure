@@ -8,11 +8,30 @@ const _frameTime = 10;
 let _timeLastFrame = 0;
 let _timeCurrent = 0;
 
+//Game State
+let _gameState = {};
+
+//Navigation
+const _keys = {
+    w: {
+        pressed: false
+    },
+    a: {
+        pressed:false
+    },
+    s: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+}
+
 //Background and sprites
 const _startingMapIndex = 1;
 let _currentMapIndex = _startingMapIndex;
-const _battleScreen = new Image();
-const _startScreen = new Image();
+const _battleImage = new Image();
+const _overworldImage = new Image();
 
 const _boundaries = [];
 const _battleTiles = [];
@@ -66,6 +85,9 @@ let _currentEncounterables =[
 ]
 
 //UI
+let _isAnimationPlaying = false;
+
+
 const _thresholdForHealthbarColorChangeMid = 50;
 const _thresholdForHealthbarColorChangeLow = 20;
 
@@ -134,7 +156,7 @@ function InitVisuals(){
             x: 0,
             y: 0
         },
-        image: _battleScreen
+        image: _battleImage
     });
 }
 function InitUI(){

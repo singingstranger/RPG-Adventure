@@ -20,6 +20,8 @@ function InitBattle(){
 
     document.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", (e) => {
+            if (_isAnimationPlaying)
+                return;
             const selectedAttack = attacks[e.currentTarget.innerHTML];
             Attack({
                 attack: selectedAttack,
@@ -152,7 +154,7 @@ function CalculateDamage(attack, recipient){
 function Attack({attack, attacker, recipient, remainingHealthPercent, renderedSprites}){
     document.querySelector("#dialogueBox").style.display = "block";
     document.querySelector("#dialogueBox").innerHTML = attacker.name + " used " + attack.name;
-
+    _isAnimationPlaying = true;
     switch(attack.animation){
         case 0:
             TackleAttack({attacker, recipient});
@@ -165,10 +167,10 @@ function Attack({attack, attacker, recipient, remainingHealthPercent, renderedSp
             TackleAttack({attack, attacker, recipient});
             break;
     }
-    ReduceHealthBar({recipient, remainingHealthPercent});
+    UpdateHealthbar({recipient, remainingHealthPercent});
 }
 
-function ReduceHealthBar({recipient, remainingHealthPercent}){
+function UpdateHealthbar({recipient, remainingHealthPercent}){
     let healthBar = "#playerCurrentHealthbar";
     
     if (recipient.isEnemy === true){
@@ -193,6 +195,7 @@ function ReduceHealthBar({recipient, remainingHealthPercent}){
         duration: 1,
         onComplete(){
             recipient.image = recipient.sprites.idle;
+            _isAnimationPlaying = false;
         }
     })
     healthBar.width;
@@ -317,7 +320,7 @@ function PlayerFaint(player){
 
 function ReturnToOverworld(){
     if (_battlePlayer.health.current <= 0){
-        Restart();
+        ChangeGameState(_gameState.GameOver);
     }
     gsap.to("#overlappingDiv", {
         opacity:1,
@@ -327,7 +330,7 @@ function ReturnToOverworld(){
                 opacity:0,
             })
             window.cancelAnimationFrame(_battleAnimationID);
-            Animate();
+            ChangeGameState(_gameState.Overworld);
         }
     });
 }
