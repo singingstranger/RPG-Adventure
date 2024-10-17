@@ -72,7 +72,7 @@ _canvas.height = 576;
 
 
 //Battles
-let _encounterRate = 0.1
+let _encounterRate = 0.01
 const _battle = {
     initiated: false
 }
@@ -159,6 +159,7 @@ function InitVisuals(){
         image: _battleImage
     });
 }
+
 function InitUI(){
 
 }

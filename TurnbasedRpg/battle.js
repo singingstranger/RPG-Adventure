@@ -139,15 +139,12 @@ function AnimateBattle(){
 }
 
 function CalculateDamage(attack, recipient){
-    console.log(attack);
     let remainingHealth;
     recipient.health.current -= attack;
     if (recipient.health.current<0){
         recipient.health.current = 0;
     }
     remainingHealth = recipient.health.current/recipient.health.max * 100;
-    console.log(remainingHealth);
-    console.log(recipient.health.current)
     return remainingHealth;
 }
 
@@ -177,14 +174,12 @@ function UpdateHealthbar({recipient, remainingHealthPercent}){
         healthBar = "#enemyCurrentHealthbar";
     } 
     if (remainingHealthPercent < _thresholdForHealthbarColorChangeLow){
-        console.log("Health very low");
         gsap.to(healthBar, {
             backgroundColor: "#f00",
             duration: 1
         });
     } 
     else if (remainingHealthPercent < _thresholdForHealthbarColorChangeMid){
-        console.log("Health low ");
         gsap.to(healthBar, {
             backgroundColor: "orange",
             duration: 1

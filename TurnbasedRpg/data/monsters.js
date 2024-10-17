@@ -46,6 +46,13 @@ const _monsters = {
             attack: _playerSpecialImage,
             hurt: _playerSpecialImage
         },
+        type: _types.Normal,
+        stamina: 10,
+        mana: 10,
+        physicalDefense: 1,
+        magicalDefense: 1,
+        physicalStrength: 1,
+        magicalPower: 1,
         attacks: [attacks.Dagger, attacks.Tackle, attacks.Slingshot],
     },
     Slime: {
@@ -64,6 +71,13 @@ const _monsters = {
             hurt: _slimeHurtImage
         },
         animate: true,
+        type: _types.Water,
+        stamina: 10,
+        mana: 10,
+        physicalDefense: 1,
+        magicalDefense: 1,
+        physicalStrength: 1,
+        magicalPower: 1,
         attacks: [attacks.Tackle, attacks.Splash]
     },
     Snare: {
@@ -82,6 +96,13 @@ const _monsters = {
             hurt: _snareHurtImage
         },
         animate: true,
+        type: _types.Plant,
+        stamina: 10,
+        mana: 10,
+        physicalDefense: 1,
+        magicalDefense: 1,
+        physicalStrength: 1,
+        magicalPower: 1,
         attacks: [attacks.Slingshot, attacks.Dagger]
     },
     Shadow: {
@@ -100,6 +121,13 @@ const _monsters = {
             hurt: _shadowHurtImage
         },
         animate: true,
+        type: _types.Demon,
+        stamina: 10,
+        mana: 10,
+        physicalDefense: 1,
+        magicalDefense: 1,
+        physicalStrength: 1,
+        magicalPower: 1,
         attacks: [attacks.Tackle, attacks.Splash]
     }
 }

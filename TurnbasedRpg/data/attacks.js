@@ -3,7 +3,7 @@ const attacks = {
     Tackle: {
         name: "Tackle",
         damage: 10,
-        type: "Normal",
+        type: _types.Normal,
         animation: 0,
         src: " ",
         color: "grey"
@@ -11,7 +11,7 @@ const attacks = {
     Slingshot: {
         name: "Slingshot",
         damage: 10,
-        type: "Earth",
+        type: _types.Normal,
         animation: 1,
         src: "./img/Battle/Attacks/pebble.png",
         color: "brown"
@@ -19,7 +19,7 @@ const attacks = {
     Splash: {
         name:"Splash",
         damage: 20,
-        type: "Water",
+        type: _types.Water,
         animation: 1,
         src: "./img/Battle/Attacks/bubble.png",
         color: "blue"
@@ -27,7 +27,7 @@ const attacks = {
     Dagger: {
         name:"Dagger",
         damage: 30,
-        type: "Normal",
+        type: _types.Normal,
         animation: 1,
         src: "./img/Battle/Attacks/sword.png",
         color: "grey"

@@ -89,6 +89,13 @@ class Monster extends Sprite{
         name = "Someone",
         health = {max: 100, current},
         isEnemy = true,
+        type = "",
+        stamina = 10,
+        mana = 10,
+        physicalDefense = 1,
+        magicalDefense = 1,
+        physicalStrength = 1,
+        magicalPower = 1,
         attacks
     }){
         super({
@@ -102,6 +109,13 @@ class Monster extends Sprite{
         this.name = name;
         this.health = {max: health.max, current: health.max};
         this.isEnemy = isEnemy;
+        this.type = type;
+        this.stamina = stamina;
+        this.mana = mana;
+        this.physicalDefense = physicalDefense;
+        this.magicalDefense = magicalDefense;
+        this.physicalStrength = physicalStrength;
+        this.magicalPower = magicalPower;
         this.attacks = attacks;
     }
 }
