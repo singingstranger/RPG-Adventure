@@ -329,3 +329,6 @@ function ReturnToOverworld(){
         }
     });
 }
+function TypeMatchupCompare(){
+    
+}
