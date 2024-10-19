@@ -72,7 +72,9 @@ _canvas.height = 576;
 
 
 //Battles
-let _encounterRate = 0.01
+let _typesInstances = [];
+let _typematchesArray = [];
+let _encounterRate = 0.01;
 const _battle = {
     initiated: false
 }
@@ -138,6 +140,16 @@ function InitVisuals(){
                 }))
             }
         })
+    })
+    
+    for (let i= 0; i<_typeMatchups.length;i++){
+        _typematchesArray.push(_typeMatchups[i]);
+    }
+
+    _typematchesArray.forEach((type) => {
+        const newType = new Type(type
+        );
+        _typesInstances.push(new Type(type))
     })
     
     InitNPCs();

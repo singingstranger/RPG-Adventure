@@ -22,6 +22,24 @@ class Trigger{
     }
 }
 
+class Type {
+    constructor({
+        name,
+        color,
+        attacksBoostedAgainst,
+        attacksWeakAgainst,
+        defenseStrongAgainst,
+        defenseWeakAgainst
+    }){
+        this.name = name;
+        this.color = color;
+        this.attacksBoostedAgainst = attacksBoostedAgainst;
+        this.attacksWeakAgainst = attacksWeakAgainst;
+        this.defenseStrongAgainst = defenseStrongAgainst;
+        this.defenseWeakAgainst = defenseWeakAgainst;
+    }
+}
+
 class Sprite{
     constructor({
         position,
