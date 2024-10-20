@@ -22,7 +22,7 @@ function InitBattle(){
         button.addEventListener("click", (e) => {
             if (_isAnimationPlaying)
                 return;
-            const selectedAttack = attacks[e.currentTarget.innerHTML];
+            const selectedAttack = _attacks[e.currentTarget.innerHTML];
             Attack({
                 attack: selectedAttack,
                 attacker: _battlePlayer,
@@ -31,12 +31,12 @@ function InitBattle(){
                 renderedSprites: _battleSprites
             });
 
-    //enemy attacks queued
+    //enemy _attacks queued
             QueueActions(selectedAttack);
         })
         button.addEventListener("mouseenter",(e)=>{
             const attackType = document.querySelector("#attackType");
-            const selectedAttack = attacks[e.currentTarget.innerHTML];
+            const selectedAttack = _attacks[e.currentTarget.innerHTML];
             const attackTypeInfo = selectedAttack.type + "</br> Damage: "+ selectedAttack.damage
             attackType.innerHTML = attackTypeInfo;
             attackType.style.color = selectedAttack.color;
