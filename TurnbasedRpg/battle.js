@@ -39,7 +39,10 @@ function InitBattle(){
             const selectedAttack = _attacks[e.currentTarget.innerHTML];
             const attackTypeInfo = selectedAttack.type + "</br> Damage: "+ selectedAttack.damage
             attackType.innerHTML = attackTypeInfo;
-            attackType.style.color = selectedAttack.color;
+            const type = selectedAttack.type;
+            let color = GetTypeColor(type);
+            
+            attackType.style.color = color;
         })
     });
 }
@@ -329,6 +332,16 @@ function ReturnToOverworld(){
         }
     });
 }
-function TypeMatchupCompare(){
+function TypeMatchupCompare(type, targetMonster){
     
+}
+function GetTypeColor(type){
+    let color = "white";
+    _typeMatchups.forEach((attack)=>{
+        if (attack.name == type){
+            color = attack.color;
+            return color;
+        }
+    })
+    return color;
 }
