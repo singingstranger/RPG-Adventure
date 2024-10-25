@@ -23,6 +23,11 @@ function InitBattle(){
             if (_isAnimationPlaying)
                 return;
             const selectedAttack = _attacks[e.currentTarget.innerHTML];
+            if (_battlePlayer.mana.current < 1){
+               if (selectedAttack.type != _types.Normal){
+                return;
+               }
+            }
             Attack({
                 attack: selectedAttack,
                 attacker: _battlePlayer,
@@ -36,7 +41,16 @@ function InitBattle(){
         button.addEventListener("mouseenter",(e)=>{
             const attackType = document.querySelector("#attackType");
             const selectedAttack = _attacks[e.currentTarget.innerHTML];
-            const attackTypeInfo = selectedAttack.type + "</br> Damage: "+ selectedAttack.damage
+            if (_battlePlayer.mana.current < 1){
+                if (selectedAttack.type != _types.Normal){
+                    console.log("no more mana");
+                    const attackTypeInfo = " Cannot cast this spell. </br> No more mana";
+                    attackType.innerHTML = attackTypeInfo;
+                    attackType.style.color = "grey";
+                    return;
+                }
+            }
+            const attackTypeInfo = selectedAttack.type + "</br> Damage: "+ selectedAttack.damage;
             attackType.innerHTML = attackTypeInfo;
             const type = selectedAttack.type;
             let color = GetTypeColor(type);
@@ -55,6 +69,10 @@ function InitPlayerHealth(){
     const playerHealthbar = document.querySelector("#playerCurrenthealthbar");
     playerHealthbar.style.width = "100%";
     playerHealthbar.style.backgroundColor = "green";
+    UpdatePlayerMana();
+}
+function UpdatePlayerMana(){
+    document.querySelector("#manaDisplay").innerHTML = "Player      mana: "+ _battlePlayer.mana.current + "/"+ _battlePlayer.mana.max;
 }
 
 function SelectEnemy(){
@@ -93,7 +111,19 @@ function QueueActions(selectedAttack){
 }
 
 function GetRandomAttack(enemy){
-    return enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)];
+    if (enemy.mana.current < 1){
+        console.log("enemy is out of mana");
+        enemy.attacks.forEach((attack)=>{
+            if (attack.type != _types.Normal){
+                enemy.attacks.pop();
+            }
+        })
+    }
+    if (enemy.attacks.length == 0){
+        enemy.attacks.push(_attacks.Tackle);
+    }
+    const attack = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)]
+    return attack;
 }
 
 function Activatebattle(animID){
@@ -138,9 +168,15 @@ function AnimateBattle(){
     })
 }
 
-function CalculateDamage(attack, recipient, effectiveness){
+function CalculateDamage(attack, attacker, recipient, effectiveness){
     let remainingHealth;
-    recipient.health.current -= attack.damage*effectiveness;
+    let defenseModifier = recipient.physicalDefense;
+    if (attack.type!=_types.Normal){
+        AdjustMana(attacker);
+        defenseModifier = recipient.magicalDefense;
+    }
+    console.log("calculating damage for attack:",attack.type, "with damage ", attack.damage," with modifier", effectiveness, "against defense", defenseModifier);
+    recipient.health.current -= attack.damage*effectiveness-defenseModifier;
     if (recipient.health.current<0){
         recipient.health.current = 0;
     }
@@ -148,14 +184,19 @@ function CalculateDamage(attack, recipient, effectiveness){
     return remainingHealth;
 }
 
+function AdjustMana(attacker){
+    attacker.mana.current -= 1;
+    if (attacker.mana.current <1){
+        attacker.mana.current = 0;
+    }
+    UpdatePlayerMana();
+}
 function Attack({attack, attacker, recipient, renderedSprites}){
     const effectiveness = TypeMatchupCompare(attack, recipient);
-    const remainingHealthPercent = CalculateDamage(attack, recipient, effectiveness);
-    console.log(effectiveness);
+    const remainingHealthPercent = CalculateDamage(attack, attacker, recipient, effectiveness);
     if (effectiveness==1){
         _effectivenessDialogue="";
     }
-    
     else if (effectiveness<1){
         _effectivenessDialogue = "The attack was weak.";
     }
@@ -302,6 +343,9 @@ function SpawnAttackSprite({attack, attacker, recipient, renderedSprites}){
 function CheckHealth(monster){
     return monster.health.current > 0;
 }
+function CheckManaLevel(monster){
+    return monster.mana.current > 0;
+}
 
 function EnemyFaint(enemy){
     console.log("enemy fainted");
@@ -373,7 +417,6 @@ function TypeMatchupCompare(attack, targetMonster){
 }
 
 function GetTypeColor(type){
-    console.log(type);
     let color = "white";
     _typeMatchups.forEach((attack)=>{
         if (attack.name == type){

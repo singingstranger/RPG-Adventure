@@ -34,7 +34,7 @@ const _typeMatchups = [{
     },
     {
         name: "Water",
-        color: "blue",
+        color: "#00a3a8",
         attacksBoostedAgainst: [_types.Spirit, _types.Fire],
         attacksWeakAgainst: [_types.Plant, _types.Demon],
         defenseStrongAgainst: [_types.Fire, _types.Spirit],
@@ -103,6 +103,20 @@ const _attacks = {
         type: _types.Normal,
         animation: 1,
         src: "./img/Battle/Attacks/sword.png"
+    }, 
+    Fireball: {
+        name:"Fireball",
+        damage: 20,
+        type: _types.Fire,
+        animation: 1,
+        src: "./img/Battle/Attacks/fire.png"
+    },
+    SpiritFire: {
+        name: "Spiritfire",
+        damage: 20,
+        type: _types.Spirit,
+        animation: 1,
+        src: "./img/Battle/Attacks/spiritFire.png"
     }
 }
 
@@ -130,7 +144,10 @@ const _monsters = {
         },
         type: _types.Normal,
         stamina: 10,
-        mana: 10,
+        mana: {
+            max: 10,
+            current: 2
+        },
         physicalDefense: 1,
         magicalDefense: 1,
         physicalStrength: 1,
@@ -155,12 +172,15 @@ const _monsters = {
         animate: true,
         type: _types.Water,
         stamina: 10,
-        mana: 10,
-        physicalDefense: 1,
-        magicalDefense: 1,
+        mana: {
+            max: 3,
+            current: 3
+        },
+        physicalDefense: 5,
+        magicalDefense: 10,
         physicalStrength: 1,
         magicalPower: 1,
-        attacks: [_attacks.Tackle, _attacks.Splash]
+        attacks: [_attacks.Splash]
     },
     Snare: {
         name: "Snare",
@@ -180,7 +200,10 @@ const _monsters = {
         animate: true,
         type: _types.Plant,
         stamina: 10,
-        mana: 10,
+        mana: {
+            max: 10,
+            current: 10
+        },
         physicalDefense: 1,
         magicalDefense: 1,
         physicalStrength: 1,
@@ -205,7 +228,10 @@ const _monsters = {
         animate: true,
         type: _types.Demon,
         stamina: 10,
-        mana: 10,
+        mana: {
+            max: 10,
+            current: 10
+        },
         physicalDefense: 1,
         magicalDefense: 1,
         physicalStrength: 1,
