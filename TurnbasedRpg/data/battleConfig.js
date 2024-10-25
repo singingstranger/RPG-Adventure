@@ -15,6 +15,12 @@ const _effectiveness = {
     defenseWeakAgainst: 1.5,
 }
 
+const _healingModes ={
+    Health: "Health",
+    Stamina: "Stamina",
+    Mana: "Mana"
+}
+
 const _typeMatchups = [{
     
         name: "Normal",

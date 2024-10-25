@@ -22,6 +22,7 @@ class Trigger{
     }
 }
 
+
 class Type {
     constructor({
         name,
@@ -159,3 +160,52 @@ class Character extends Sprite{
         this.name = name;
     }
 }
+
+class Item{
+    constructor({
+        name = "", 
+        description = "",
+        count = 0
+    }){
+        this.name = name;
+        this.description = description;
+        this.count = count;
+    }
+}
+class Orb extends Item{
+    constructor({
+        name = "", 
+        description = "",
+        count = 0,
+
+        src,
+        type
+    }){
+        super({
+            name,
+            description,
+            count
+        })
+        this.src = src;
+        this.type = type;
+    }
+}
+class HealingItem extends Item{
+    constructor({
+        name = "", 
+        description = "",
+        count = 0,
+
+        healingType,
+        healingfactor
+    }){
+        super({
+            name, 
+            description,
+            count
+        })
+        this.healingType = healingType;
+        this.healingfactor = healingfactor;
+    }
+}
+
