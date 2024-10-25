@@ -27,7 +27,6 @@ function InitBattle(){
                 attack: selectedAttack,
                 attacker: _battlePlayer,
                 recipient: _enemy,
-                remainingHealthPercent: CalculateDamage(selectedAttack.damage, _enemy),
                 renderedSprites: _battleSprites
             });
 
@@ -41,7 +40,6 @@ function InitBattle(){
             attackType.innerHTML = attackTypeInfo;
             const type = selectedAttack.type;
             let color = GetTypeColor(type);
-            
             attackType.style.color = color;
         })
     });
@@ -89,7 +87,6 @@ function QueueActions(selectedAttack){
                 attack: randomAttack,
                 attacker: _enemy,
                 recipient: _battlePlayer,
-                remainingHealthPercent: CalculateDamage(selectedAttack.damage, _battlePlayer),
                 renderedSprites: _battleSprites
             })
         });
@@ -141,9 +138,9 @@ function AnimateBattle(){
     })
 }
 
-function CalculateDamage(attack, recipient){
+function CalculateDamage(attack, recipient, effectiveness){
     let remainingHealth;
-    recipient.health.current -= attack;
+    recipient.health.current -= attack.damage*effectiveness;
     if (recipient.health.current<0){
         recipient.health.current = 0;
     }
@@ -151,9 +148,23 @@ function CalculateDamage(attack, recipient){
     return remainingHealth;
 }
 
-function Attack({attack, attacker, recipient, remainingHealthPercent, renderedSprites}){
+function Attack({attack, attacker, recipient, renderedSprites}){
+    const effectiveness = TypeMatchupCompare(attack, recipient);
+    const remainingHealthPercent = CalculateDamage(attack, recipient, effectiveness);
+    console.log(effectiveness);
+    if (effectiveness==1){
+        _effectivenessDialogue="";
+    }
+    
+    else if (effectiveness<1){
+        _effectivenessDialogue = "The attack was weak.";
+    }
+    else if (effectiveness>1){
+        _effectivenessDialogue = "The attack was strong.";
+    }
+  
     document.querySelector("#dialogueBox").style.display = "block";
-    document.querySelector("#dialogueBox").innerHTML = attacker.name + " used " + attack.name;
+    document.querySelector("#dialogueBox").innerHTML = attacker.name + " used " + "<span style = 'color: "+GetTypeColor(attack.type)+";'>"+attack.name +"</span>"+". "+ _effectivenessDialogue;
     _isAnimationPlaying = true;
     switch(attack.animation){
         case 0:
@@ -332,10 +343,37 @@ function ReturnToOverworld(){
         }
     });
 }
-function TypeMatchupCompare(type, targetMonster){
-    
+
+function TypeMatchupCompare(attack, targetMonster){
+    let effectivenessModifier = 1;
+    const targetType = targetMonster.type;
+    const attackType = attack.type;
+    let weaknessesList = [];
+    let strengthsList = [];
+
+    _typeMatchups.forEach((typematchup_type)=>{
+        if (targetType== typematchup_type.name){
+            weaknessesList = typematchup_type.defenseWeakAgainst;
+            strengthsList = typematchup_type.defenseStrongAgainst;
+        }
+    })
+    strengthsList.forEach((strengths_type)=>{
+        if (attackType== strengths_type){
+            console.log("defense strong");
+            effectivenessModifier = _effectiveness.defenseStrongAgainst;
+        }
+    })
+    weaknessesList.forEach((weaknesses_type)=>{
+        if (weaknesses_type == attackType){
+            console.log("defense weak");
+            effectivenessModifier = _effectiveness.defenseWeakAgainst;
+        }
+    })
+    return effectivenessModifier;
 }
+
 function GetTypeColor(type){
+    console.log(type);
     let color = "white";
     _typeMatchups.forEach((attack)=>{
         if (attack.name == type){

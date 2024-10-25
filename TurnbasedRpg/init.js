@@ -85,6 +85,7 @@ let _currentEncounterables =[
     _monsters.Slime,
     _monsters.Snare
 ]
+let _effectivenessDialogue="";
 
 //UI
 let _isAnimationPlaying = false;
@@ -141,7 +142,7 @@ function InitVisuals(){
             }
         })
     })
-    
+
     for (let i= 0; i<_typeMatchups.length;i++){
         _typematchesArray.push(_typeMatchups[i]);
     }

@@ -9,6 +9,12 @@ const _types = {
     Electric: "Electric"
 }
 
+const _effectiveness = {
+    attackNeutral: 1,
+    defenseStrongAgainst: 0.5,
+    defenseWeakAgainst: 1.5,
+}
+
 const _typeMatchups = [{
     
         name: "Normal",
@@ -33,6 +39,14 @@ const _typeMatchups = [{
         attacksWeakAgainst: [_types.Plant, _types.Demon],
         defenseStrongAgainst: [_types.Fire, _types.Spirit],
         defenseWeakAgainst: [_types.Electric, _types.Plant]
+    },
+    {
+        name: "Plant",
+        color: "green",
+        attacksBoostedAgainst: [_types.Water, _types.Demon],
+        attacksWeakAgainst: [_types.Plant, _types.Fire],
+        defenseStrongAgainst: [_types.Water, _types.Demon],
+        defenseWeakAgainst: [_types.Fire]
     },
     {
         name: "Spirit",
@@ -121,7 +135,7 @@ const _monsters = {
         magicalDefense: 1,
         physicalStrength: 1,
         magicalPower: 1,
-        attacks: [_attacks.Dagger, _attacks.Tackle, _attacks.Slingshot],
+        attacks: [_attacks.Dagger, _attacks.Tackle, _attacks.Slingshot, _attacks.Splash],
     },
     Slime: {
         name: "Slime",
