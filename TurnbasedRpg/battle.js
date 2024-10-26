@@ -2,6 +2,11 @@ let _battlePlayer = new Monster(_monsters.Player);
 let _enemy;
 
 function InitBattle(){
+
+    //shut down outside UI
+    CloseInventory(document.querySelector("#inventoryPanel"));
+    document.querySelector("#inventoryButton").disabled = true;
+
     _battleSprites = [];
     document.querySelector("#dialogueBox").style.display = "none";
     document.querySelector("#attacksBox").replaceChildren();
@@ -13,12 +18,12 @@ function InitBattle(){
     InitPlayerHealth();
 
     _battlePlayer.attacks.forEach(attack=>{
-        const attackButton = document.createElement("button");
+        const attackButton = document.createElement("attackButton");
         attackButton.innerHTML = attack.name;
         document.querySelector("#attacksBox").append(attackButton);
     })
 
-    document.querySelectorAll("button").forEach(button => {
+    document.querySelectorAll("attackButton").forEach(button => {
         button.addEventListener("click", (e) => {
             if (_isAnimationPlaying)
                 return;
@@ -141,7 +146,7 @@ function Activatebattle(animID){
                 duration: 0.3,
                 onComplete(){
                     AnimateBattle(),
-                    document.querySelector("#userInterface").style.display = "block";
+                    document.querySelector("#battleInterface").style.display = "block";
                     gsap.to("#overlappingDiv",{
                         opacity:0,
                         duration:1
@@ -372,13 +377,14 @@ function PlayerFaint(player){
 }
 
 function ReturnToOverworld(){
+    document.querySelector("#inventoryButton").disabled = false;
     if (_battlePlayer.health.current <= 0){
         ChangeGameState(_gameState.GameOver);
     }
     gsap.to("#overlappingDiv", {
         opacity:1,
         onComplete(){
-            document.querySelector("#userInterface").style.display = "none";
+            document.querySelector("#battleInterface").style.display = "none";
             gsap.to("#overlappingDiv", {
                 opacity:0,
             })

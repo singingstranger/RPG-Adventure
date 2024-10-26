@@ -67,8 +67,8 @@ const _zoomLevel = 2.5;
 const _canvas = document.querySelector("canvas");
 const _context = _canvas.getContext("2d");
 
-_canvas.width = 1024;
-_canvas.height = 576;
+_canvas.width = window.innerWidth;
+_canvas.height = 512;
 
 
 //Battles
@@ -87,8 +87,13 @@ let _currentEncounterables =[
 ]
 let _effectivenessDialogue="";
 
+//Inventory
+let _itemsInInventory = [];
+let _isInventoryInit = false;
+
 //UI
 let _isAnimationPlaying = false;
+let _isInventoryOpen = false;
 
 
 const _thresholdForHealthbarColorChangeMid = 50;
@@ -152,7 +157,6 @@ function InitVisuals(){
         );
         _typesInstances.push(new Type(type))
     })
-    
     InitNPCs();
     InitUI();
     
@@ -174,14 +178,23 @@ function InitVisuals(){
 }
 
 function InitUI(){
-
+    const inventoryPanel = document.querySelector("#inventoryPanel");
+    inventoryPanel.style.display = "none"
+    const inventoryButton = document.querySelector("#inventoryButton");
+    const inventoryImage = document.querySelector("#inventoryImage");
+    inventoryImage.src = _orbs.NoOrb.src;
+    inventoryButton.addEventListener("click", (e) => {
+        if (_isAnimationPlaying)
+            return;
+        ToggleInventory(inventoryPanel);
+        })
 }
 
 function InitNPCs(){
-    let _clone = new Character(characters.MarinClone);
+    let _clone = new Character(_characters.MarinClone);
     _clone.position={
-        x: _canvas.width-200 ,
-        y:  _canvas.height-150
+        x: 800,
+        y:  200
     };
     _listOfNPCs.push(_clone);
     _boundaries.push(new Boundary({

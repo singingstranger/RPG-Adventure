@@ -35,3 +35,4 @@ const _snareAttackImage = new Image();
 _snareAttackImage.src = "./img/Enemies/Snare/SnareAttack.png";
 const _snareHurtImage = new Image();
 _snareHurtImage.src = "./img/Enemies/Snare/SnareHurt.png";
+

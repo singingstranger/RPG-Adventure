@@ -1,4 +1,13 @@
+
 const _orbs ={
+    NoOrb:{
+        name: "Heart",
+        description: "Without an elemental orb, only your human heart remains.",
+        count: 1,
+
+        src: "./img/GUI/Heart.png",
+        type: _types.Normal
+    },
     FireOrb:{
         name: "Orb of Flames",
         description: "A mythical artefact that grants the power of fire to you.",
@@ -52,13 +61,24 @@ const _healingItems = {
     HealingPotion: {
         name: "Tincture of Health",
         description: "Soothes the aches of your body. +10 Health",
+        count: 1,
         healingType: _healingModes.Health,
         healingfactor: 10
     },
     ManaPotion: {
         name: "Tincture of Magic",
         description: "Replenishes magical power. +10 Mana",
+        count: 1,
         healingType: _healingModes.Mana,
         healingFacot: 10
     }
 }
+const _orbImages = [];
+
+Object.keys(_orbs).forEach(key =>{
+    console.log(key, _orbs[key]);
+    const newImage = new Image();
+    newImage.src = _orbs[key].src;
+    _orbImages.push([_orbs[key].name, newImage]);
+})
+

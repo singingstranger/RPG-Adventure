@@ -3,7 +3,7 @@ function InitNewMap(){
     SetTileSize(_zoomLevel);
     InitVisuals();
 
-    document.querySelector("#userInterface").style.display = "none";
+    document.querySelector("#battleInterface").style.display = "none";
     gsap.to("#overlappingDiv", {
         opacity:0,
         duration: 1

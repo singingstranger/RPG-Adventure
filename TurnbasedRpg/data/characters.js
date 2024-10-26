@@ -1,7 +1,7 @@
 
 //const _playerSpriteDimensions = { x: 168, y: 100}
 
-const characters = {
+const _characters = {
     MarinClone: {
         name: "MarinClone",
         position: {

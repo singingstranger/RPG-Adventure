@@ -1,14 +1,14 @@
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     <style>
-    
+
+
         *{
-            font-family: "Amatic SC", sans-serif;
+            font-family: "Oxanium", sans-serif;
             color: white;
-            font-size: 30px;
+            font-size: 20px;
         }
 
         body{
@@ -19,23 +19,64 @@
         h1{
             margin: 0;
             color: white;
-            font-size: 25px;
         }
 
-        button{
-            font-size: 25px;
+        attackButton{
+            display: flex;
+            justify-content: center;
+            align-items: center;
             color: white;
             background-color: black;
             border: 0;
             cursor: pointer;
         }
 
-        button:hover {
+        attackButton:hover {
             color: black;
             font-weight: bold;
             background-color: grey;
         }
 
+        itemButton{
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            width: 100%;
+            color: white;
+            background-color: black;
+            border: 0;
+            cursor: pointer;
+        }
+        itemButton:hover{
+            color: black;
+            font-weight: bold;
+            background-color: grey;
+        }
+
+        button{
+            border-radius: 50%;
+            border: 5px solid white;
+            background-color: white;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            left: 30px;
+            top: 30px;
+            cursor: pointer;
+        }
+        button:hover{
+            border: 2px solid white;
+            background-color: white;
+        }
+        ::-webkit-scrollbar{
+            width:10px;
+        }
+        ::-webkit-scrollbar-track{
+            background: black;
+        }
+        ::-webkit-scrollbar-thumb{
+            background: white;
+        }
     </style>
 </head>
 <div id="navigation"></div>
@@ -57,7 +98,31 @@
 
 <!-- javascript game -->
     <canvas></canvas>
-    <div id="userInterface">
+    <div id="Inventory" 
+    style="overflow: hidden;">
+        <button id="inventoryButton">
+            <image id="inventoryImage"src="./img/Inventory/Orbs/orb_water.png" style="
+                width: 100%;
+                height: 100%;
+            "></image>
+        </button>
+        <div id="inventoryPanel"
+        style="
+            position: absolute;
+            left: 30px;
+            top: 100px;
+            height: 50%;
+            width: 200px;
+            background-color: black;
+            outline: solid black 5px;
+            display: flex;
+            flex-direction: column;
+            overflow: scroll;
+        ">
+        </div>
+    </div>
+    
+    <div id="battleInterface">
         <!-- Player status bar -->
         <div id="playerStatusBar" 
         style="
@@ -141,7 +206,6 @@
             style="
                 position: absolute; 
                 color: white; 
-                font-size: 30;
                 top:0; 
                 right:0; 
                 bottom:0; 
@@ -173,6 +237,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -184,12 +249,13 @@
 <script src="data/characters.js"></script>
 
 <script src="init.js"></script>
+<script src="classes.js"></script>
+<script src="UIElements.js"></script>
 <script src="helpers.js"></script>
 <script src="gameStateController.js"></script>
 <script src="overworld.js"></script>
 <script src="maps.js"></script>
 <script src="update.js"></script>
 <script src="eventListeners.js"></script>
-<script src="classes.js"></script>
 <script src="battle.js"></script>
 <script src="index.js"></script>
