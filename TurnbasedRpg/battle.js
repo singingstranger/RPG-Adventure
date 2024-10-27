@@ -19,6 +19,7 @@ function InitBattle(){
 
     _battlePlayer.attacks.forEach(attack=>{
         const attackButton = document.createElement("attackButton");
+        console.log(attack.type);
         attackButton.innerHTML = attack.name;
         document.querySelector("#attacksBox").append(attackButton);
     })
@@ -46,6 +47,8 @@ function InitBattle(){
         button.addEventListener("mouseenter",(e)=>{
             const attackType = document.querySelector("#attackType");
             const selectedAttack = _attacks[e.currentTarget.innerHTML];
+            console.log("selected attack:", selectedAttack," via ", e.currentTarget.innerHTML);
+            console.log("selected:",selectedAttack.name, " of type: ", selectedAttack.type);
             if (_battlePlayer.mana.current < 1){
                 if (selectedAttack.type != _types.Normal){
                     console.log("no more mana");

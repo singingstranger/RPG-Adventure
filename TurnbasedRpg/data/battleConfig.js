@@ -12,7 +12,7 @@ const _types = {
 const _effectiveness = {
     attackNeutral: 1,
     defenseStrongAgainst: 0.5,
-    defenseWeakAgainst: 1.5,
+    defenseWeakAgainst: 2,
 }
 
 const _healingModes ={
@@ -32,7 +32,7 @@ const _typeMatchups = [{
     },
     {
         name: "Fire",
-        color: "red",
+        color: "#ff0055",
         attacksBoostedAgainst: [_types.Plant, _types.Normal],
         attacksWeakAgainst: [_types.Spirit, _types.Water],
         defenseStrongAgainst: [_types.Electric, _types.Plant],
@@ -48,7 +48,7 @@ const _typeMatchups = [{
     },
     {
         name: "Plant",
-        color: "green",
+        color: "#68ff8d",
         attacksBoostedAgainst: [_types.Water, _types.Demon],
         attacksWeakAgainst: [_types.Plant, _types.Fire],
         defenseStrongAgainst: [_types.Water, _types.Demon],
@@ -56,7 +56,7 @@ const _typeMatchups = [{
     },
     {
         name: "Spirit",
-        color: "white",
+        color: "#ff68d6",
         attacksBoostedAgainst: [_types.Demon, _types.Normal],
         attacksWeakAgainst: [_types.Electric, _types.Water],
         defenseStrongAgainst: [_types.Fire, _types.Demon],
@@ -64,7 +64,7 @@ const _typeMatchups = [{
     },
     {
         name: "Demon",
-        color: "purple",
+        color: "#9918ff",
         attacksBoostedAgainst: [_types.Normal, _types.Electric],
         attacksWeakAgainst: [_types.Spirit, _types.Plant],
         defenseStrongAgainst: [_types.Water, _types.Electric],
@@ -72,7 +72,7 @@ const _typeMatchups = [{
     },
     {
         name: "Electric",
-        color: "orange",
+        color: "#db8800",
         attacksBoostedAgainst: [_types.Spirit, _types.Water],
         attacksWeakAgainst: [_types.Fire, _types.Demon],
         defenseStrongAgainst: [_types.Plant, _types.Spirit],
@@ -124,14 +124,14 @@ const _attacks = {
         animation: 1,
         src: "./img/Battle/Attacks/thorns.png"
     },
-    DarkStar: {
-        name:"Dark Star",
+    Darkstar: {
+        name:"Darkstar",
         damage:20,
         type: _types.Demon,
         animation: 1,
         src: "./img/Battle/Attacks/darkStar.png"
     },
-    SpiritFire: {
+    Spiritfire: {
         name: "Spiritfire",
         damage: 20,
         type: _types.Spirit,
@@ -221,8 +221,8 @@ const _monsters = {
         type: _types.Plant,
         stamina: 10,
         mana: {
-            max: 10,
-            current: 10
+            max: 2,
+            current: 2
         },
         physicalDefense: 1,
         magicalDefense: 1,
@@ -245,21 +245,21 @@ const _monsters = {
         type: _types.Demon,
         stamina: 10,
         mana: {
-            max: 10,
-            current: 10
+            max: 2,
+            current: 2
         },
         physicalDefense: 1,
         magicalDefense: 1,
         physicalStrength: 1,
         magicalPower: 1,
-        attacks: [_attacks.DarkStar]
+        attacks: [_attacks.Darkstar]
     }
 }
 const _playerElementalAttacks = [
     _types.Fire = _attacks.Fireball,
     _types.Water = _attacks.Splash,
     _types.Plant = _attacks.Thorns,
-    _types.Demon = _attacks.DarkStar,
-    _types.Spirit = _attacks.SpiritFire,
+    _types.Demon = _attacks.Darkstar,
+    _types.Spirit = _attacks.Spiritfire,
     _types.Electric = _attacks.Thunder
 ]
