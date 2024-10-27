@@ -89,6 +89,8 @@ let _currentEncounterables =[
 let _effectivenessDialogue="";
 
 //Inventory
+const _orbClassInstances = [];
+
 let _itemsInInventory = [];
 let _isInventoryInit = false;
 

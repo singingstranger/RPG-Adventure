@@ -96,13 +96,6 @@ const _attacks = {
         animation: 1,
         src: "./img/Battle/Attacks/pebble.png"
     },
-    Splash: {
-        name:"Splash",
-        damage: 20,
-        type: _types.Water,
-        animation: 1,
-        src: "./img/Battle/Attacks/bubble.png"
-    },
     Dagger: {
         name:"Dagger",
         damage: 30,
@@ -110,6 +103,13 @@ const _attacks = {
         animation: 1,
         src: "./img/Battle/Attacks/sword.png"
     }, 
+    Splash: {
+        name:"Splash",
+        damage: 20,
+        type: _types.Water,
+        animation: 1,
+        src: "./img/Battle/Attacks/bubble.png"
+    },
     Fireball: {
         name:"Fireball",
         damage: 20,
@@ -117,12 +117,33 @@ const _attacks = {
         animation: 1,
         src: "./img/Battle/Attacks/fire.png"
     },
+    Thorns: {
+        name:"Thorns",
+        damage:20,
+        type: _types.Plant,
+        animation: 1,
+        src: "./img/Battle/Attacks/thorns.png"
+    },
+    DarkStar: {
+        name:"Dark Star",
+        damage:20,
+        type: _types.Demon,
+        animation: 1,
+        src: "./img/Battle/Attacks/darkStar.png"
+    },
     SpiritFire: {
         name: "Spiritfire",
         damage: 20,
         type: _types.Spirit,
         animation: 1,
         src: "./img/Battle/Attacks/spiritFire.png"
+    }, 
+    Thunder:{
+        name: "Thunder",
+        damage: 20,
+        type: _types.Electric,
+        animation: 1,
+        src: "./img/Battle/Attacks/electricCloud.png"
     }
 }
 
@@ -207,7 +228,7 @@ const _monsters = {
         magicalDefense: 1,
         physicalStrength: 1,
         magicalPower: 1,
-        attacks: [_attacks.Slingshot, _attacks.Dagger]
+        attacks: [_attacks.Thorns]
     },
     Shadow: {
         name: "Shadow",
@@ -231,6 +252,14 @@ const _monsters = {
         magicalDefense: 1,
         physicalStrength: 1,
         magicalPower: 1,
-        attacks: [_attacks.Tackle, _attacks.Splash]
+        attacks: [_attacks.DarkStar]
     }
 }
+const _playerElementalAttacks = [
+    _types.Fire = _attacks.Fireball,
+    _types.Water = _attacks.Splash,
+    _types.Plant = _attacks.Thorns,
+    _types.Demon = _attacks.DarkStar,
+    _types.Spirit = _attacks.SpiritFire,
+    _types.Electric = _attacks.Thunder
+]
