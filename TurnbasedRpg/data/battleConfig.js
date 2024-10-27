@@ -163,10 +163,7 @@ const _monsters = {
     Slime: {
         name: "Slime",
         health: {max: 50, current:50},
-        position: {
-            x: 700,
-            y: 200
-        },
+     
         image: {src: _slimeIdleImage.src},
         frames: { max: 3, hold: 30},
         sprites: {
@@ -191,10 +188,6 @@ const _monsters = {
     Snare: {
         name: "Snare",
         health: {max: 150, current:150},
-        position: {
-            x: 700,
-            y: 200
-        },
         image: {src: _snareEntryImage.src},
         frames: { max: 3, hold: 30},
         sprites: {
@@ -219,10 +212,6 @@ const _monsters = {
     Shadow: {
         name: "Shadow",
         health: {max: 100, current:100},
-        position: {
-            x: 700,
-            y: 200
-        },
         image: {src: _shadowIdleImage.src},
         frames: { max: 3, hold: 30},
         sprites: {

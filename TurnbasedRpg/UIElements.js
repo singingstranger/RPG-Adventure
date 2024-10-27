@@ -9,11 +9,11 @@ function UpdateInventory(itemToUpdateName, numberChange, inventoryPanel){
     })
 }
 function InitInventory(inventoryPanel){
-    _orbImages.forEach((orb)=>{
+    _orbClassInstances.forEach((orb)=>{
         const orbButton = document.createElement("itemButton");
         orbButton.innerHTML = orb[0]+"</br>";
         orbButton.addEventListener("click", (e)=>{
-            UpdateCarryingOrb(orb[1].src);
+            UpdateCarryingOrb(orb[1].image.src);
         })
         inventoryPanel.append(orbButton);
     })

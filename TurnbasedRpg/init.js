@@ -62,6 +62,7 @@ let _offset = {
 }
 const _startingPosTileCount = 30;
 const _zoomLevel = 2.5;
+const _startingPositionItems = [0,0];
 
 //Init Canvas
 const _canvas = document.querySelector("canvas");

@@ -77,7 +77,7 @@ function InitPlayerHealth(){
     UpdatePlayerMana();
 }
 function UpdatePlayerMana(){
-    document.querySelector("#manaDisplay").innerHTML = "Player      mana: "+ _battlePlayer.mana.current + "/"+ _battlePlayer.mana.max;
+    document.querySelector("#manaDisplay").innerHTML = "Player"+ _battlePlayer.mana.current + "/"+ _battlePlayer.mana.max;
 }
 
 function SelectEnemy(){

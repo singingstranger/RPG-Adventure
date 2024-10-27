@@ -73,12 +73,22 @@ const _healingItems = {
         healingFacot: 10
     }
 }
-const _orbImages = [];
+const _orbClassInstances = [];
 
 Object.keys(_orbs).forEach(key =>{
-    console.log(key, _orbs[key]);
     const newImage = new Image();
     newImage.src = _orbs[key].src;
-    _orbImages.push([_orbs[key].name, newImage]);
-})
+    const newOrb = new Orb({
+        position: [0,0],
+        rotation: 0,
+        image: newImage, 
+        frames: {max: 1, hold: 10}, 
+        sprites: newImage, 
+        animate: false,
 
+        name: _orbs[key].name,
+        description: _orbs[key].name,
+        count: 0
+    });
+    _orbClassInstances.push([_orbs[key].name, newOrb]);
+})

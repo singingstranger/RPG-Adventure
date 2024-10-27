@@ -98,7 +98,10 @@ class Sprite{
 
 class Monster extends Sprite{
     constructor({
-        position,
+        position= {
+            x: _canvas.width-200,
+            y: 200
+        },
         rotation = 0,
         image, 
         frames = {max: 1, hold: 10}, 
@@ -161,12 +164,27 @@ class Character extends Sprite{
     }
 }
 
-class Item{
+class Item extends Sprite{
     constructor({
+        position,
+        rotation = 0,
+        image, 
+        frames = {max: 1, hold: 10}, 
+        sprites, 
+        animate = false,
+
         name = "", 
         description = "",
         count = 0
     }){
+        super({
+            position,
+            rotation,
+            image, 
+            frames, 
+            sprites, 
+            animate,
+        })
         this.name = name;
         this.description = description;
         this.count = count;
@@ -174,24 +192,43 @@ class Item{
 }
 class Orb extends Item{
     constructor({
+        position,
+        rotation = 0,
+        image, 
+        frames = {max: 1, hold: 10}, 
+        sprites, 
+        animate = false,
+
         name = "", 
         description = "",
         count = 0,
 
-        src,
-        type
+        type = _types.Normal
     }){
         super({
+            position,
+            rotation,
+            image, 
+            frames, 
+            sprites, 
+            animate,
+
             name,
             description,
             count
         })
-        this.src = src;
         this.type = type;
     }
 }
 class HealingItem extends Item{
     constructor({
+        position,
+        rotation = 0,
+        image, 
+        frames = {max: 1, hold: 10}, 
+        sprites, 
+        animate = false,
+
         name = "", 
         description = "",
         count = 0,
@@ -200,6 +237,13 @@ class HealingItem extends Item{
         healingfactor
     }){
         super({
+            position,
+            rotation,
+            image, 
+            frames, 
+            sprites, 
+            animate,
+            
             name, 
             description,
             count
