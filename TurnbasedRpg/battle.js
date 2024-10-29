@@ -74,7 +74,7 @@ function InitEnemyHealth(){
 }
 
 function InitPlayerHealth(){
-    const playerHealthbar = document.querySelector("#playerCurrenthealthbar");
+    const playerHealthbar = document.querySelector("#playerCurrentHealthbar");
     playerHealthbar.style.width = "100%";
     playerHealthbar.style.backgroundColor = "green";
     UpdatePlayerMana();
@@ -138,19 +138,19 @@ function Activatebattle(animID){
     InitBattle();
     _battleSprites.push(_enemy);
     _battleSprites.push(_battlePlayer);
-    gsap.to("#overlappingDiv", {
+    gsap.to("#blackFadeOverlappingDiv", {
         opacity:1,
         repeat: 3,
         yoyo: true,
         duration: 0.3,
         onComplete(){
-            gsap.to("#overlappingDiv", {
+            gsap.to("#blackFadeOverlappingDiv", {
                 opacity:1,
                 duration: 0.3,
                 onComplete(){
                     AnimateBattle(),
                     document.querySelector("#battleInterface").style.display = "block";
-                    gsap.to("#overlappingDiv",{
+                    gsap.to("#blackFadeOverlappingDiv",{
                         opacity:0,
                         duration:1
                     })
@@ -384,11 +384,11 @@ function ReturnToOverworld(){
     if (_battlePlayer.health.current <= 0){
         ChangeGameState(_gameState.GameOver);
     }
-    gsap.to("#overlappingDiv", {
+    gsap.to("#blackFadeOverlappingDiv", {
         opacity:1,
         onComplete(){
             document.querySelector("#battleInterface").style.display = "none";
-            gsap.to("#overlappingDiv", {
+            gsap.to("#blackFadeOverlappingDiv", {
                 opacity:0,
             })
             window.cancelAnimationFrame(_battleAnimationID);

@@ -4,7 +4,7 @@ function InitNewMap(){
     InitVisuals();
 
     document.querySelector("#battleInterface").style.display = "none";
-    gsap.to("#overlappingDiv", {
+    gsap.to("#blackFadeOverlappingDiv", {
         opacity:0,
         duration: 1
     });
