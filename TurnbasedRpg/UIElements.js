@@ -1,5 +1,15 @@
+const dialogueBox = document.querySelector("#dialogueBox");
+const inventoryButton = document.querySelector("#inventoryButton");
+const battleInterface = document.querySelector("#battleInterface");
+const manaDisplay = document.querySelector("#manaDisplay");
+const playerCurrentHealthbar =  document.querySelector("#playerCurrentHealthbar");
+const enemyCurrentHealthBar = document.querySelector("#enemyCurrentHealthbar");
+const attackType = document.querySelector("#attackType");
+const attacksBox = document.querySelector("#attacksBox");
+const inventoryPanel = document.querySelector("#inventoryPanel");
+const inventoryImage = document.querySelector("#inventoryImage");
+
 function UpdateCarryingOrbUI(string){
-    const inventoryImage = document.querySelector("#inventoryImage");
     inventoryImage.src = string;
 }
 
@@ -33,4 +43,11 @@ function OpenInventory(inventoryPanel){
 function CloseInventory(inventoryPanel){
     inventoryPanel.style.display = "none";
     _isInventoryOpen = false;
+}
+
+function ShowDialogueMessage(message) {
+    dialogueBox.innerHt = message;
+}
+function SetManaDisplay(message) {
+    manaDisplay.innerHTML = "Mana: " + message;
 }

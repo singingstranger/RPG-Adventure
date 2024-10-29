@@ -181,10 +181,7 @@ function InitVisuals(){
 }
 
 function InitUI(){
-    const inventoryPanel = document.querySelector("#inventoryPanel");
     inventoryPanel.style.display = "none"
-    const inventoryButton = document.querySelector("#inventoryButton");
-    const inventoryImage = document.querySelector("#inventoryImage");
     inventoryImage.src = _orbs.NoOrb.src;
     inventoryButton.addEventListener("click", (e) => {
         if (_isAnimationPlaying)
