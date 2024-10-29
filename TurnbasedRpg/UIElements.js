@@ -3,24 +3,34 @@ const UI = {
     inventoryButton: document.querySelector("#inventoryButton"),
     battleInterface: document.querySelector("#battleInterface"),
     manaDisplay: document.querySelector("#manaDisplay"),
-    playerCurrentHealthbar:  document.querySelector("#playerCurrentHealthbar"),
+    playerCurrentHealthbar: document.querySelector("#playerCurrentHealthbar"),
+    enemyName: document.querySelector("#enemyName"),
     enemyCurrentHealthbar: document.querySelector("#enemyCurrentHealthbar"),
     attackType: document.querySelector("#attackType"),
     attacksBox: document.querySelector("#attacksBox"),
     inventoryPanel: document.querySelector("#inventoryPanel"),
     inventoryImage: document.querySelector("#inventoryImage"),
-    attackButtons: document.querySelectorAll("attackButton"),
+    attackButtons: document.querySelectorAll(".attack"),
+
+    CreateAttackButton : function(attack) {
+        let attackButton = document.createElement("button");
+        attackButton.innerHTML = attack.name;
+        attackButton.className = "attack";
+        this.attacksBox.append(attackButton);
+        return attackButton;
+    }
 }
 
-function UpdateCarryingOrbUI(string){
+function UpdateCarryingOrbUI(string) {
     UI.inventoryImage.src = string;
 }
 
-function InitInventoryUI(){
-    _orbClassInstances.forEach((orb)=>{
-        const orbButton = document.createElement("itemButton");
-        orbButton.innerHTML = orb[0]+"</br>";
-        orbButton.addEventListener("click", (e)=>{
+function InitInventoryUI() {
+    _orbClassInstances.forEach((orb) => {
+        const orbButton = document.createElement("button");
+        orbButton.className = "itemButton";
+        orbButton.innerHTML = orb[0] + "</br>";
+        orbButton.addEventListener("click", (e) => {
             EquipNewOrb(orb[1]);
             UpdateCarryingOrbUI(orb[1].image.src);
         })
@@ -28,22 +38,21 @@ function InitInventoryUI(){
     })
     _isInventoryInit = true;
 }
-function ToggleInventory(){
-    if (_isInventoryOpen)
-    {
+function ToggleInventory() {
+    if (_isInventoryOpen) {
         CloseInventory();
         return;
     }
     OpenInventory();
 }
-function OpenInventory(){
+function OpenInventory() {
     if (!_isInventoryInit)
         InitInventoryUI();
     UpdateInventory();
-    UI.inventoryPanel.style.display="flex";
+    UI.inventoryPanel.style.display = "flex";
     _isInventoryOpen = true;
 }
-function CloseInventory(){
+function CloseInventory() {
     UI.inventoryPanel.style.display = "none";
     _isInventoryOpen = false;
 }

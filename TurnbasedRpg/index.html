@@ -26,7 +26,7 @@
             color: white;
         }
 
-        attackButton {
+        .attack {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -36,13 +36,13 @@
             cursor: pointer;
         }
 
-        attackButton:hover {
+        .attack:hover {
             color: black;
             font-weight: bold;
             background-color: grey;
         }
 
-        itemButton {
+        .itemButton {
             display: flex;
             justify-content: left;
             align-items: center;
@@ -59,7 +59,7 @@
             background-color: grey;
         }
 
-        button {
+        .button {
             border-radius: 50%;
             border: 5px solid white;
             background-color: white;
@@ -71,7 +71,7 @@
             cursor: pointer;
         }
 
-        button:hover {
+        .button:hover {
             border: 2px solid white;
             background-color: white;
         }
@@ -224,7 +224,7 @@
     <canvas></canvas>
 
     <div id="Inventory">
-        <button id="inventoryButton">
+        <button id="inventoryButton" class="button">
             <image id="inventoryImage" src="./img/Inventory/Orbs/orb_water.png"></image>
         </button>
         <div id="inventoryPanel"></div>

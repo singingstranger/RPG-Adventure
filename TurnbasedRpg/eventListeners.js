@@ -5,11 +5,11 @@ UI.dialogueBox.addEventListener("click", (e)=>{
         ReturnToOverworld();
         return;
     }
-    if (!CheckHealth(_battlePlayer)){
+    if (!IsAlive(_battlePlayer)){
         PlayerFaint(_battlePlayer);
         return;
     }
-    if (!CheckHealth(_enemy)){
+    if (!IsAlive(_enemy)){
         EnemyFaint(_enemy);
         return;
     }

@@ -18,46 +18,39 @@ function InitBattle() {
     InitPlayerHealth();
 
     _battlePlayer.attacks.forEach(attack => {
-        const attackButton = document.createElement("attackButton");
         console.log(attack.type);
-        attackButton.innerHTML = attack.name;
-        UI.attacksBox.append(attackButton);
-    })
+        
+        const attackButton = UI.CreateAttackButton(attack);
 
-    UI.attackButtons.forEach(button => {
-        button.addEventListener("click", (e) => {
+        attackButton.addEventListener("click", (e) => {
             if (_isAnimationPlaying)
                 return;
-            const selectedAttack = _attacks[e.currentTarget.innerHTML];
-            if (_battlePlayer.mana.current < 1) {
-                if (selectedAttack.type != _types.Normal) {
-                    return;
-                }
-            }
+
             Attack({
-                attack: selectedAttack,
+                attack: attack,
                 attacker: _battlePlayer,
                 recipient: _enemy,
                 renderedSprites: _battleSprites
             });
 
             //enemy _attacks queued
-            QueueActions(selectedAttack);
-        })
-        button.addEventListener("mouseenter", (e) => {
-            const selectedAttack = _attacks[e.currentTarget.innerHTML];
-            console.log("selected attack:", selectedAttack, " via ", e.currentTarget.innerHTML);
-            console.log("selected:", selectedAttack.name, " of type: ", selectedAttack.type);
-            if (_battlePlayer.mana.current < 1) {
-                if (selectedAttack.type != _types.Normal) {
+            QueueActions(attack);
+        });
+        
+        attackButton.addEventListener("mouseenter", (e) => {
+            console.log("selected attack:", attack, " via ", e.currentTarget.innerHTML);
+            console.log("selected:", attack.name, " of type: ", attack.type);
+            
+            if (!HasMana(_battlePlayer)) {
+                if (attack.type != _types.Normal) {
                     console.log("no more mana");
                     SetAttackType(" Cannot cast this spell. </br> No more mana", "grey");
                     return;
                 }
             }
-            let color = GetTypeColor(selectedAttack.type);
-            SetAttackType(selectedAttack.type + "</br> Damage: " + selectedAttack.damage, color);
-        })
+            let color = GetTypeColor(attack.type);
+            SetAttackType(attack.type + "</br> Damage: " + attack.damage, color);
+        });
 
         function SetAttackType(attackTypeInfo, color) {
             UI.attackType.innerHTML = attackTypeInfo;
@@ -69,7 +62,7 @@ function InitBattle() {
 function InitEnemyHealth() {
     UI.enemyCurrentHealthbar.style.width = "100%";
     UI.enemyCurrentHealthbar.style.backgroundColor = "green";
-    document.querySelector("#enemyName").innerHTML = _enemy.name;
+    UI.enemyName.innerHTML = _enemy.name;
 }
 
 function InitPlayerHealth() {
@@ -86,20 +79,20 @@ function SelectEnemy() {
     return (randInt);
 }
 
-function QueueActions(selectedAttack) {
+function QueueActions() {
     if (!_battle.initiated) {
         _battleQueue.push(() => {
             ReturnToOverworld();
         });
         return;
     }
-    if (!CheckHealth(_battlePlayer)) {
+    if (!IsAlive(_battlePlayer)) {
         _battleQueue.push(() => {
             PlayerFaint(_battlePlayer);
         });
         return;
     }
-    if (!CheckHealth(_enemy)) {
+    if (!IsAlive(_enemy)) {
         _battleQueue.push(() => {
             EnemyFaint(_battlePlayer);
         });
@@ -112,12 +105,12 @@ function QueueActions(selectedAttack) {
             attacker: _enemy,
             recipient: _battlePlayer,
             renderedSprites: _battleSprites
-        })
+        });
     });
 }
 
 function GetRandomAttack(enemy) {
-    if (enemy.mana.current < 1) {
+    if (!HasMana(enemy)) {
         console.log("enemy is out of mana");
         enemy.attacks.forEach((attack) => {
             if (attack.type != _types.Normal) {
@@ -126,7 +119,7 @@ function GetRandomAttack(enemy) {
         })
     }
     if (enemy.attacks.length == 0) {
-        enemy.attacks.push(_attacks.Tackle);
+        enemy.attacks.push(_attacks.Tackle); //Do we want to find a `Normal` type attack for the entity?
     }
     const attack = enemy.attacks[Math.floor(Math.random() * enemy.attacks.length)]
     return attack;
@@ -198,6 +191,12 @@ function AdjustMana(attacker) {
     UpdatePlayerMana();
 }
 function Attack({ attack, attacker, recipient, renderedSprites }) {
+    if (attacker.mana.current < 1) {
+        if (attack.type != _types.Normal) {
+            ShowDialogueMessage(attacker.name + " is out of mana and can only make Normal attacks");
+            return;
+        }
+    }
     const effectiveness = TypeMatchupCompare(attack, recipient);
     const remainingHealthPercent = CalculateDamage(attack, attacker, recipient, effectiveness);
     if (effectiveness == 1) {
@@ -346,10 +345,10 @@ function SpawnAttackSprite({ attack, attacker, recipient, renderedSprites }) {
     })
 }
 
-function CheckHealth(monster) {
+function IsAlive(monster) {
     return monster.health.current > 0;
 }
-function CheckManaLevel(monster) {
+function HasMana(monster) {
     return monster.mana.current > 0;
 }
 
@@ -379,7 +378,7 @@ function PlayerFaint(player) {
 
 function ReturnToOverworld() {
     UI.inventoryButton.disabled = false;
-    if (_battlePlayer.health.current <= 0) {
+    if (!IsAlive(_battlePlayer)) {
         ChangeGameState(_gameState.GameOver);
     }
     gsap.to("#blackFadeOverlappingDiv", {
