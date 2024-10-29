@@ -3,7 +3,7 @@ function InitNewMap() {
     SetTileSize(_zoomLevel);
     InitVisuals();
 
-    battleInterface.style.display = "none";
+    UI.battleInterface.style.display = "none";
     gsap.to("#blackFadeOverlappingDiv", {
         opacity: 0,
         duration: 1
@@ -33,7 +33,6 @@ function AnimateOverworld() {
 
     _player.draw();
     let moving = true;
-    let inBattleTile = false;
     let movementSpeed = _movementSpeed + 3;
 
     _player.animate = false;

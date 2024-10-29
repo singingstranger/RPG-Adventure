@@ -4,12 +4,12 @@ let _enemy;
 function InitBattle() {
 
     //shut down outside UI
-    CloseInventory(inventoryPanel);
-    inventoryButton.disabled = true;
+    CloseInventory();
+    UI.inventoryButton.disabled = true;
 
     _battleSprites = [];
-    dialogueBox.style.display = "none";
-    attacksBox.replaceChildren();
+    UI.dialogueBox.style.display = "none";
+    UI.attacksBox.replaceChildren();
     _battleQueue = [];
     _battlePlayer = new Monster(_monsters.Player);
 
@@ -21,10 +21,10 @@ function InitBattle() {
         const attackButton = document.createElement("attackButton");
         console.log(attack.type);
         attackButton.innerHTML = attack.name;
-        attacksBox.append(attackButton);
+        UI.attacksBox.append(attackButton);
     })
 
-    document.querySelectorAll("attackButton").forEach(button => {
+    UI.attackButtons.forEach(button => {
         button.addEventListener("click", (e) => {
             if (_isAnimationPlaying)
                 return;
@@ -51,29 +51,30 @@ function InitBattle() {
             if (_battlePlayer.mana.current < 1) {
                 if (selectedAttack.type != _types.Normal) {
                     console.log("no more mana");
-                    const attackTypeInfo = " Cannot cast this spell. </br> No more mana";
-                    attackType.innerHTML = attackTypeInfo;
-                    attackType.style.color = "grey";
+                    SetAttackType(" Cannot cast this spell. </br> No more mana", "grey");
                     return;
                 }
             }
-            const attackTypeInfo = selectedAttack.type + "</br> Damage: " + selectedAttack.damage;
-            attackType.innerHTML = attackTypeInfo;
-            const type = selectedAttack.type;
-            let color = GetTypeColor(type);
-            attackType.style.color = color;
+            let color = GetTypeColor(selectedAttack.type);
+            SetAttackType(selectedAttack.type + "</br> Damage: " + selectedAttack.damage, color);
         })
+
+        function SetAttackType(attackTypeInfo, color) {
+            UI.attackType.innerHTML = attackTypeInfo;
+            UI.attackType.style.color = color;
+        }
     });
 }
+
 function InitEnemyHealth() {
-    enemyCurrentHealthbar.style.width = "100%";
-    enemyCurrentHealthbar.style.backgroundColor = "green";
+    UI.enemyCurrentHealthbar.style.width = "100%";
+    UI.enemyCurrentHealthbar.style.backgroundColor = "green";
     document.querySelector("#enemyName").innerHTML = _enemy.name;
 }
 
 function InitPlayerHealth() {
-    playerCurrentHealthbar.style.width = "100%";
-    playerCurrentHealthbar.style.backgroundColor = "green";
+    UI.playerCurrentHealthbar.style.width = "100%";
+    UI.playerCurrentHealthbar.style.backgroundColor = "green";
     UpdatePlayerMana();
 }
 function UpdatePlayerMana() {
@@ -146,7 +147,7 @@ function Activatebattle(animID) {
                 duration: 0.3,
                 onComplete() {
                     AnimateBattle(),
-                        battleInterface.style.display = "block";
+                        UI.battleInterface.style.display = "block";
                     gsap.to("#blackFadeOverlappingDiv", {
                         opacity: 0,
                         duration: 1
@@ -209,7 +210,7 @@ function Attack({ attack, attacker, recipient, renderedSprites }) {
         _effectivenessDialogue = "The attack was strong.";
     }
 
-    dialogueBox.style.display = "block";
+    UI.dialogueBox.style.display = "block";
     ShowDialogueMessage(attacker.name + " used " + "<span style = 'color: " + GetTypeColor(attack.type) + ";'>" + attack.name + "</span>" + ". " + _effectivenessDialogue);
     _isAnimationPlaying = true;
     switch (attack.animation) {
@@ -377,14 +378,14 @@ function PlayerFaint(player) {
 }
 
 function ReturnToOverworld() {
-    inventoryButton.disabled = false;
+    UI.inventoryButton.disabled = false;
     if (_battlePlayer.health.current <= 0) {
         ChangeGameState(_gameState.GameOver);
     }
     gsap.to("#blackFadeOverlappingDiv", {
         opacity: 1,
         onComplete() {
-            battleInterface.style.display = "none";
+            UI.battleInterface.style.display = "none";
             gsap.to("#blackFadeOverlappingDiv", {
                 opacity: 0,
             })

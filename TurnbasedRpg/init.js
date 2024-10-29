@@ -181,12 +181,12 @@ function InitVisuals(){
 }
 
 function InitUI(){
-    inventoryPanel.style.display = "none"
-    inventoryImage.src = _orbs.NoOrb.src;
-    inventoryButton.addEventListener("click", (e) => {
+    CloseInventory();
+    UI.inventoryImage.src = _orbs.NoOrb.src;
+    UI.inventoryButton.addEventListener("click", (e) => {
         if (_isAnimationPlaying)
             return;
-        ToggleInventory(inventoryPanel);
+        ToggleInventory();
         })
 }
 
