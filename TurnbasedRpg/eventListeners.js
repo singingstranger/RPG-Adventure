@@ -7,11 +7,11 @@ UI.dialogueBox.addEventListener("click", (e)=>{
         return;
     }
     //TODO: why are we handling this here, and not in the battle logic itself?
-    if (!IsAlive(battle.Player)){
+    if (!battle.IsAlive(battle.Player)){
         battle.PlayerFaint();
         return;
     }
-    if (!IsAlive(battle.Enemy)){
+    if (!battle.IsAlive(battle.Enemy)){
         battle.EnemyFaint();
         return;
     }

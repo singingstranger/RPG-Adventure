@@ -13,13 +13,13 @@ const battle =
         UI.dialogueBox.style.display = "none";
         UI.attacksBox.replaceChildren();
         _battleQueue = [];
-        this.Player = new Monster(_monsters.Player);
+        battle.Player = new Monster(_monsters.Player);
     
-        this.Enemy = new Monster(_currentEncounterables[this.SelectEnemy()]);
-        this.InitEnemyHealth();
-        this.InitPlayerHealth();
+        battle.Enemy = new Monster(_currentEncounterables[battle.SelectEnemy()]);
+        battle.InitEnemyHealth();
+        battle.InitPlayerHealth();
     
-        this.Player.attacks.forEach(attack => {
+        battle.Player.attacks.forEach(attack => {
             console.log(attack.type);
             
             const attackButton = UI.CreateAttackButton(attack);
@@ -30,27 +30,27 @@ const battle =
     
                 battle.Attack({
                     attack: attack,
-                    attacker: this.Player,
-                    recipient: this.Enemy,
+                    attacker: battle.Player,
+                    recipient: battle.Enemy,
                     renderedSprites: _battleSprites
                 });
     
                 //enemy _attacks queued
-                this.QueueActions(attack);
+                battle.QueueActions(attack);
             });
             
             attackButton.addEventListener("mouseenter", (e) => {
                 console.log("selected attack:", attack, " via ", e.currentTarget.innerHTML);
                 console.log("selected:", attack.name, " of type: ", attack.type);
                 
-                if (!this.HasMana(this.Player)) {
+                if (!battle.HasMana(battle.Player)) {
                     if (attack.type != _types.Normal) {
                         console.log("no more mana");
-                        this.SetAttackType(" Cannot cast this spell. </br> No more mana", "grey");
+                        battle.SetAttackType(" Cannot cast this spell. </br> No more mana", "grey");
                         return;
                     }
                 }
-                let color = this.GetTypeColor(attack.type);
+                let color = battle.GetTypeColor(attack.type);
                 SetAttackType(attack.type + "</br> Damage: " + attack.damage, color);
             });
     
@@ -63,52 +63,55 @@ const battle =
     InitEnemyHealth: function() {
         UI.enemyCurrentHealthbar.style.width = "100%";
         UI.enemyCurrentHealthbar.style.backgroundColor = "green";
-        UI.enemyName.innerHTML = this.Enemy.name;
+        UI.enemyName.innerHTML = battle.Enemy.name;
     },
     InitPlayerHealth: function() {
         UI.playerCurrentHealthbar.style.width = "100%";
         UI.playerCurrentHealthbar.style.backgroundColor = "green";
-        this.UpdatePlayerMana();
+        battle.UpdatePlayerMana();
     },
     UpdatePlayerMana: function() {
-        SetManaDisplay(this.Player.mana.current + "/" + this.Player.mana.max);
+        SetManaDisplay(battle.Player.mana.current + "/" + battle.Player.mana.max);
     },
     SelectEnemy: function() {
         let randInt = GetRandomInt(0, _currentEncounterables.length);
         return (randInt);
     },
+    IsAlive: function (monster) {
+        return monster.health.current > 0;
+    },
     QueueActions: function() {
         if (!battle.initiated) {
             _battleQueue.push(() => {
-                this.ReturnToOverworld();
+                battle.ReturnToOverworld();
             });
             return;
         }
-        if (!IsAlive(this.Player)) {
+        if (!battle.IsAlive(battle.Player)) {
             _battleQueue.push(() => {
-                this.PlayerFaint();
+                battle.PlayerFaint();
             });
             return;
         }
-        if (!IsAlive(this.Enemy)) {
+        if (!battle.IsAlive(battle.Enemy)) {
             _battleQueue.push(() => {
-                this.EnemyFaint();
+                battle.EnemyFaint();
             });
             return;
         }
-        const randomAttack = this.GetRandomAttack(this.Enemy)
+        const randomAttack = battle.GetRandomAttack(battle.Enemy)
         _battleQueue.push(() => {
-            this.Attack({
+            battle.Attack({
                 attack: randomAttack,
-                attacker: this.Enemy,
-                recipient: this.Player,
+                attacker: battle.Enemy,
+                recipient: battle.Player,
                 renderedSprites: _battleSprites
             });
         });
     },
 
     GetRandomAttack: function (enemy) {
-        if (!this.HasMana(enemy)) {
+        if (!battle.HasMana(enemy)) {
             console.log("enemy is out of mana");
             enemy.attacks.forEach((attack) => {
                 if (attack.type != _types.Normal) {
@@ -124,9 +127,9 @@ const battle =
     },
     
     Activatebattle: function (animID) {
-        this._initBattle();
-        _battleSprites.push(this.Enemy);
-        _battleSprites.push(this.Player);
+        battle._initBattle();
+        _battleSprites.push(battle.Enemy);
+        _battleSprites.push(battle.Player);
         gsap.to("#blackFadeOverlappingDiv", {
             opacity: 1,
             repeat: 3,
@@ -169,7 +172,7 @@ const battle =
         let remainingHealth;
         let defenseModifier = recipient.physicalDefense;
         if (attack.type != _types.Normal) {
-            this.AdjustMana(attacker);
+            battle.AdjustMana(attacker);
             defenseModifier = recipient.magicalDefense;
         }
         console.log("calculating damage for attack:", attack.type, "with damage ", attack.damage, " with modifier", effectiveness, "against defense", defenseModifier);
@@ -186,7 +189,7 @@ const battle =
         if (attacker.mana.current < 1) {
             attacker.mana.current = 0;
         }
-        this.UpdatePlayerMana();
+        battle.UpdatePlayerMana();
     },
 
     Attack: function ({ attack, attacker, recipient, renderedSprites }) {
@@ -196,8 +199,8 @@ const battle =
                 return;
             }
         }
-        const effectiveness = this.TypeMatchupCompare(attack, recipient);
-        const remainingHealthPercent = this.CalculateDamage(attack, attacker, recipient, effectiveness);
+        const effectiveness = battle.TypeMatchupCompare(attack, recipient);
+        const remainingHealthPercent = battle.CalculateDamage(attack, attacker, recipient, effectiveness);
         if (effectiveness == 1) {
             _effectivenessDialogue = "";
         }
@@ -209,21 +212,21 @@ const battle =
         }
     
         UI.dialogueBox.style.display = "block";
-        ShowDialogueMessage(attacker.name + " used " + "<span style = 'color: " + this.GetTypeColor(attack.type) + ";'>" + attack.name + "</span>" + ". " + _effectivenessDialogue);
+        ShowDialogueMessage(attacker.name + " used " + "<span style = 'color: " + battle.GetTypeColor(attack.type) + ";'>" + attack.name + "</span>" + ". " + _effectivenessDialogue);
         _isAnimationPlaying = true;
         switch (attack.animation) {
             case 0:
-                this.TackleAttack({ attacker, recipient });
+                battle.TackleAttack({ attacker, recipient });
                 break;
             case 1:
-                this.DistanceAttack({ recipient });
-                this.SpawnAttackSprite({ attack, attacker, recipient, renderedSprites });
+                battle.DistanceAttack({ recipient });
+                battle.SpawnAttackSprite({ attack, attacker, recipient, renderedSprites });
                 break;
             default:
-                this.TackleAttack({ attack, attacker, recipient });
+                battle.TackleAttack({ attack, attacker, recipient });
                 break;
         }
-        this.UpdateHealthbar({ recipient, remainingHealthPercent });
+        battle.UpdateHealthbar({ recipient, remainingHealthPercent });
     },
     
     UpdateHealthbar: function ({ recipient, remainingHealthPercent }) {
@@ -375,7 +378,7 @@ const battle =
     
     ReturnToOverworld: function() {
         UI.inventoryButton.disabled = false;
-        if (!IsAlive(this.Player)) {
+        if (!battle.IsAlive(battle.Player)) {
             ChangeGameState(_gameState.GameOver);
         }
         gsap.to("#blackFadeOverlappingDiv", {
