@@ -37,7 +37,7 @@ function AnimateOverworld() {
 
     _player.animate = false;
 
-    if (_battle.initiated) { return; }
+    if (battle.initiated) { return; }
 
     //battle activation
     if (_keys.w.pressed || _keys.a.pressed || _keys.s.pressed || _keys.d.pressed) {
@@ -51,7 +51,6 @@ function AnimateOverworld() {
                 overlappingArea > (_player.width * _player.height / 2) && Math.random() < _encounterRate
             ) {
                 ChangeGameState(_gameState.Battle, animationID);
-                _battle.initiated = true;
                 _player.animate = false;
                 break;
             }

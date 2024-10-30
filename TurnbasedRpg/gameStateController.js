@@ -19,7 +19,7 @@ function ChangeGameState(gamestate, animationID = ""){
             AnimateOverworld();
             break;
         case _gameState.Battle:
-            Activatebattle(animationID);
+            battle.Activatebattle(animationID);
             break;
         case _gameState.Dialogue:
             break;
