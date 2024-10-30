@@ -1,8 +1,9 @@
 describe("TypeMatchupCompare should", function() {
-    let attack = _attacks.Tackle;
-    let monster = _monsters.Slime;
-
+    
     function TestTypeMatchupCompare(attackType, monsterType) {
+        let attack = _attacks.Tackle;
+        let monster = _monsters.Slime;
+        
         attack.type = attackType;
         monster.type = monsterType;
         return TypeMatchupCompare(attack, monster);
