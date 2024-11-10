@@ -1,16 +1,18 @@
-document.querySelector("#dialogueBox").addEventListener("click", (e)=>{
+UI.dialogueBox.addEventListener("click", (e)=>{
     if (_isAnimationPlaying)
         return;
-    if (!_battle.initiated){
-        ReturnToOverworld();
+    
+    if (!battle.initiated){
+        battle.ReturnToOverworld();
         return;
     }
-    if (!CheckHealth(_battlePlayer)){
-        PlayerFaint(_battlePlayer);
+    //TODO: why are we handling this here, and not in the battle logic itself?
+    if (!battle.IsAlive(battle.Player)){
+        battle.PlayerFaint();
         return;
     }
-    if (!CheckHealth(_enemy)){
-        EnemyFaint(_enemy);
+    if (!battle.IsAlive(battle.Enemy)){
+        battle.EnemyFaint();
         return;
     }
     if (_battleQueue.length > 0){
@@ -26,6 +28,8 @@ document.querySelector("#dialogueBox").addEventListener("click", (e)=>{
 let _lastkey = " ";
 window.addEventListener("keydown", (e) => {
     switch (e.key){
+        case "ArrowUp":
+        case "W":
         case "w":
             _keys.w.pressed = true;
             _keys.a.pressed = false;
@@ -33,6 +37,8 @@ window.addEventListener("keydown", (e) => {
             _keys.d.pressed = false;
             _lastkey = "w";
             break;
+        case "ArrowLeft":
+        case "A":
         case "a":
             _keys.a.pressed = true;
             _keys.w.pressed = false;
@@ -40,6 +46,8 @@ window.addEventListener("keydown", (e) => {
             _keys.d.pressed = false;
             _lastkey = "a";
             break;
+        case "ArrowDown":
+        case "S":
         case "s":           
             _keys.w.pressed = false;
             _keys.a.pressed = false;
@@ -47,6 +55,8 @@ window.addEventListener("keydown", (e) => {
             _keys.d.pressed = false;
             _lastkey = "s";
             break;
+        case "ArrowRight":
+        case "D":
         case "d":
             _keys.w.pressed = false;
             _keys.a.pressed = false;
@@ -58,15 +68,23 @@ window.addEventListener("keydown", (e) => {
 })
 window.addEventListener("keyup", (e) => {
     switch (e.key){
+        case "ArrowUp":
+        case "W":
         case "w":
             _keys.w.pressed = false;
             break;
+        case "ArrowLeft":
+        case "A":
         case "a":
             _keys.a.pressed = false;
             break;
-        case "s":
+        case "ArrowDown":
+        case "S":
+        case "s":  
             _keys.s.pressed = false;
             break;
+        case "ArrowRight":
+        case "D":
         case "d":
             _keys.d.pressed = false;
             break;

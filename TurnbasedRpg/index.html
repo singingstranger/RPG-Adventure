@@ -1,27 +1,32 @@
+<!DOCTYPE html>
+
 <head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&family=Oxanium:wght@200..800&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
     <style>
-
-
-        *{
+        * {
             font-family: "Oxanium", sans-serif;
             color: white;
             font-size: 20px;
         }
 
-        body{
+        body {
             margin: 0;
             background-color: black;
         }
 
-        h1{
+        h1 {
             margin: 0;
             color: white;
         }
 
-        attackButton{
+        .attack {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,13 +36,13 @@
             cursor: pointer;
         }
 
-        attackButton:hover {
+        .attack:hover {
             color: black;
             font-weight: bold;
             background-color: grey;
         }
 
-        itemButton{
+        .itemButton {
             display: flex;
             justify-content: left;
             align-items: center;
@@ -47,13 +52,14 @@
             border: 0;
             cursor: pointer;
         }
-        itemButton:hover{
+
+        itemButton:hover {
             color: black;
             font-weight: bold;
             background-color: grey;
         }
 
-        button{
+        .button {
             border-radius: 50%;
             border: 5px solid white;
             background-color: white;
@@ -64,50 +70,114 @@
             top: 30px;
             cursor: pointer;
         }
-        button:hover{
+
+        .button:hover {
             border: 2px solid white;
             background-color: white;
         }
-        ::-webkit-scrollbar{
-            width:10px;
+
+        ::-webkit-scrollbar {
+            width: 10px;
         }
-        ::-webkit-scrollbar-track{
+
+        ::-webkit-scrollbar-track {
             background: black;
         }
-        ::-webkit-scrollbar-thumb{
+
+        ::-webkit-scrollbar-thumb {
             background: white;
         }
-    </style>
-</head>
-<div id="navigation"></div>
-<div style="display: inline-block; position: relative;">
-<!-- Black fade element overlappingDiv -->
-    <div 
-    id="overlappingDiv"
-    style="
-        background-color: black;
-        position: absolute; 
-        top: 0;
-        right:0; 
-        bottom:0; 
-        left:0; opacity: 1; 
-        pointer-events: none;
-        z-index: 10;
-        ">
-    </div>
 
-<!-- javascript game -->
-    <canvas></canvas>
-    <div id="Inventory" 
-    style="overflow: hidden;">
-        <button id="inventoryButton">
-            <image id="inventoryImage"src="./img/Inventory/Orbs/orb_water.png" style="
-                width: 100%;
-                height: 100%;
-            "></image>
-        </button>
-        <div id="inventoryPanel"
-        style="
+        #enemyStatusBar {
+            position: absolute; 
+            background-color: black; 
+            width: 25%; 
+            height: 10%; 
+            right: 10%; 
+            top:5%;
+            border-left: 5px red solid;
+        }
+
+        #enemyHealthBar {
+            position: relative;
+        }
+
+        #enemyPotentialHealthbar {
+            height: 5px;
+            background-color: white;
+        }
+
+        #enemyCurrentHealthbar {
+            height: 5px;
+            background-color: green;
+            position: absolute;
+            margin-right: 5px;
+            margin-left: 0px;
+            top: 0;
+        }
+
+        #playerStatusBar {
+            position: absolute; 
+            background-color: black; 
+            width: 25%; 
+            height: 10%; 
+            left: 10%; 
+            top:5%;
+            border-left: 5px blue solid;
+        }
+
+        #playerPotentialHealthbar {
+            height: 5px;
+            background-color: white;
+        }
+
+        #playerCurrentHealthbar {
+            height: 5px;
+            background-color: green;
+            position: absolute;
+            margin-right: 5px;
+            margin-left: 0px;
+            top: 0;
+        }
+
+        #attacks {
+            background-color: black;
+            position: absolute;
+            height: 140px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 5px blue solid;
+            display: flex;
+        }
+
+        #attackType {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30%;
+            border-left: 5px blue solid;
+        }
+
+        #attacksBox {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            width: 70%
+        }
+
+        #dialogueBox {
+            position: absolute;
+            color: white;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 20px;
+            background-color: black;
+            display: none
+        }
+
+        #inventoryPanel {
             position: absolute;
             left: 30px;
             top: 100px;
@@ -118,145 +188,96 @@
             display: flex;
             flex-direction: column;
             overflow: scroll;
-        ">
-        </div>
-    </div>
-    
-    <div id="battleInterface">
-        <!-- Player status bar -->
-        <div id="playerStatusBar" 
-        style="
-            position: absolute; 
-            background-color: black; 
-            width: 25%; 
-            height: 10%; 
-            left: 10%; 
-            top:5%;
-            border-left: 5px blue solid;">
-            <div style="margin:5px; height: 100%">
-                <h1 id="manaDisplay" style="margin: 5px;"> Player </h1> 
-                <div id="playerHealthBar" style="position: relative;">
-                    <div 
-                    id="playerPotentialHealthbar" 
-                    style="height:5px; 
-                    background-color: white; 
-                    ">
-                    
-                    </div>
+        }
 
-                    <div 
-                    id="playerCurrentHealthbar" 
-                    style="height:5px; 
-                    background-color: green; 
-                    position: absolute; 
-                    margin-right: 5px;
-                    margin-left: 0px;
-                    top: 0;">
-                    </div>
-                </div>
-            </div>
-        </div>
-    <!-- Enemy status bar -->
-        <div id="enemyStatusBar"
-        style="
-            position: absolute; 
-            background-color: black; 
-            width: 25%; 
-            height: 10%; 
-            right: 10%; 
-            top:5%;
-            border-left: 5px red solid;">
-            <div style="margin:5px; height: 100%">
-                <h1 id="enemyName" style="margin: 5px;"> Enemy </h1>
-                <div id="enemyHealthBar" style="position: relative;">
-                    <div 
-                    id="enemyPotentialHealthbar" 
-                    style="height:5px; 
-                    background-color: white; 
-                    ">
-
-                    </div>
-
-                    <div 
-                    id="enemyCurrentHealthbar" 
-                    style="height:5px; 
-                    background-color: green; 
-                    position: absolute; 
-                    margin-right: 5px;
-                    margin-left: 0px;
-                    top: 0;
-                    ">
-                    </div>
-                </div>
-            </div>
-        </div>
-    <!-- attack UI -->
-        <div style="
+        #blackFadeOverlappingDiv {
             background-color: black;
             position: absolute;
-            height: 140px;
-            left: 0;
-            right:0;
+            top: 0;
+            right: 0;
             bottom: 0;
-            border: 5px blue solid;
-            display: flex;
-            ">
-            <div 
-            id="dialogueBox"
-            style="
-                position: absolute; 
-                color: white; 
-                top:0; 
-                right:0; 
-                bottom:0; 
-                left:0; 
-                padding: 20px;
-                background-color: black;
-                display:none">
-                asjdflakjfdls
+            left: 0;
+            opacity: 1;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #Inventory {
+            overflow: hidden;
+        }
+
+        #InventoryImage {
+            width: 100%;
+            height: 100%;
+        }
+
+        .statusBar {
+            margin: 5px;
+            height: 100%
+        }
+    </style>
+    <div id="navigation"></div>
+    <!-- Black fade element overlappingDiv -->
+    <div id="blackFadeOverlappingDiv"></div>
+
+    <!-- javascript game -->
+    <canvas></canvas>
+
+    <div id="Inventory">
+        <button id="inventoryButton" class="button">
+            <image id="inventoryImage" src="./img/Inventory/Orbs/orb_water.png"></image>
+        </button>
+        <div id="inventoryPanel"></div>
+    </div>
+
+    <div id="battleInterface">
+        <div id="playerStatusBar" class="statusBar">
+            <div style="margin:5px; height: 100%">
+                <h1 id="manaDisplay" style="margin: 5px;"> Player </h1>
+                <div id="playerHealthBar" style="position: relative;">
+                    <div id="playerPotentialHealthbar"></div>
+                    <div id="playerCurrentHealthbar"></div>
+                </div>
             </div>
-            <div 
-            id="attacksBox" 
-            style="
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                width: 70%
-                ">
-                
+        </div>
+        <div id="enemyStatusBar">
+            <div style="margin:5px; height: 100%">
+                <h1 id="enemyName" style="margin: 5px;"> Enemy </h1>
+                <div id="enemyHealthBar">
+                    <div id="enemyPotentialHealthbar"></div>
+                    <div id="enemyCurrentHealthbar"></div>
+                </div>
             </div>
-            <div 
-            id="attackType"
-            style="
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 30%;
-                border-left: 5px blue solid;
-                ">
+        </div>
+        <div id="attacks">
+            <div id="dialogueBox">asjdflakjfdls</div>
+            <div id="attacksBox"></div>
+            <div id="attackType">
                 <h1>Attack Type</h1>
             </div>
         </div>
     </div>
-    
-</div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
+        integrity="sha512-H6cPm97FAsgIKmlBA4s774vqoN24V5gSQL4yBTDOY2su2DeXZVhQPxFK4P6GPdnZqM9fg1G3cMv5wD7e6cFLZQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-<script src="data/imageImports.js"></script>
-<script src="data/battleConfig.js"></script>
-<script src="data/mapData.js"></script>
-<script src="classes.js"></script>
-<script src="data/items.js"></script>
-<script src="data/characters.js"></script>
+    <script src="data/imageImports.js"></script>
+    <script src="data/battleConfig.js"></script>
+    <script src="data/mapData.js"></script>
+    <script src="classes.js"></script>
+    <script src="data/items.js"></script>
+    <script src="data/characters.js"></script>
 
-<script src="init.js"></script>
-<script src="UIElements.js"></script>
-<script src="inventory.js"></script>
-<script src="helpers.js"></script>
-<script src="gameStateController.js"></script>
-<script src="overworld.js"></script>
-<script src="maps.js"></script>
-<script src="update.js"></script>
-<script src="eventListeners.js"></script>
-<script src="battle.js"></script>
-<script src="index.js"></script>
+    <script src="init.js"></script>
+    <script src="UIElements.js"></script>
+    <script src="inventory.js"></script>
+    <script src="helpers.js"></script>
+    <script src="gameStateController.js"></script>
+    <script src="overworld.js"></script>
+    <script src="maps.js"></script>
+    <script src="update.js"></script>
+    <script src="eventListeners.js"></script>
+    <script src="battle.js"></script>
+    <script src="index.js"></script>
+</body>
